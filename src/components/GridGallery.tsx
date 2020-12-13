@@ -74,7 +74,7 @@ async function convertImages(images: Array<InputImage | string>): Promise<Array<
 }
 
 /* eslint-disable no-console */
-const GridGallery: React.FC<GridGalleryProps> = ({
+export const GridGallery: React.FC<GridGalleryProps> = ({
   images,
   margin = 2,
   containerClassName = '',

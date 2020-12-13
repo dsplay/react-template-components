@@ -1,2 +1,2 @@
 export * from './components/MyComponent';
-export * as GridGallery from './components/GridGallery';
+export * from './components/GridGallery';
