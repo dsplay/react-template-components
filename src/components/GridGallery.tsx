@@ -7,27 +7,27 @@ import React, {
 import './GridGallery.sass';
 
 interface InputImage {
-  src: string,
-  width: number,
-  height: number,
+  src: string
+  width: number
+  height: number
 }
 
 interface Image extends InputImage {
-  id: string,
-  marginTop: number,
-  marginBottom: number,
-  marginLeft: number,
-  marginRight: number,
+  id: string
+  marginTop: number
+  marginBottom: number
+  marginLeft: number
+  marginRight: number
 }
 
 interface GridGalleryProps {
-  images: Array<InputImage | string>,
-  margin: number,
-  containerClassName: string,
-  imageClassName: string,
+  images: Array<InputImage | string>
+  margin: number
+  containerClassName: string
+  imageClassName: string
 }
 
-function makeId(length = 16) {
+function makeId (length = 16): string {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -37,11 +37,10 @@ function makeId(length = 16) {
   return result;
 }
 
-async function convertImages(images: Array<InputImage | string>): Promise<Array<InputImage>> {
-  return Promise.all(images.map((imageOrSrc): Promise<InputImage> => {
+async function convertImages (images: Array<InputImage | string>): Promise<InputImage[]> {
+  return await Promise.all(images.map(async (imageOrSrc): Promise<InputImage> => {
     if (typeof imageOrSrc === 'string') {
-
-      return new Promise<InputImage>((resolve, reject) => {
+      return await new Promise<InputImage>((resolve, reject) => {
         const image = new Image();
         image.src = imageOrSrc;
         image.onload = (e) => {
@@ -59,7 +58,7 @@ async function convertImages(images: Array<InputImage | string>): Promise<Array<
               height,
             });
           } else {
-            reject();
+            reject(new Error('invalid event type'));
           }
         };
 
@@ -85,24 +84,24 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
   const [convertedImages, setProcessedImages] = useState<InputImage[]>();
   const element = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    (async () => {
+  useEffect((): void => {
+    (async (): Promise<void> => {
       const processed = await convertImages(images);
-      console.log('converted', processed);
+      // console.log('converted', processed);
       setProcessedImages(processed);
     })();
-  }, []);
+  }, [images]);
 
   useEffect(() => {
-    if (element && element.current) {
+    if (element.current !== null) {
       console.log('element:', element.current?.offsetWidth, element.current.offsetHeight);
       setContainerWidth(element.current.offsetWidth);
       setContainerHeight(element.current.offsetHeight);
     }
   }, []);
 
-  const finalImages = useMemo(() => {
-    if (!containerWidth || !containerHeight || !convertedImages) return null;
+  const finalImages: Image[] | undefined = useMemo(() => {
+    if (containerWidth === undefined || containerHeight === undefined || convertedImages === undefined) return undefined;
 
     const maxRatio = 0.5;
     const unit = Math.sqrt((containerWidth * containerHeight) / convertedImages.length);
@@ -116,16 +115,16 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
     const rowHeight = Math.floor((containerHeight - ((rowCount + 1) * margin)) / rowCount);
     console.log('rowHeight', rowHeight);
 
-    let currentRowWidths: Array<Image> = [];
-    let finalData: Array<Image> = [];
+    let currentRowWidths: Image[] = [];
+    let finalData: Image[] = [];
     let currentRowTotalWidth = margin;
     let currentRowCount = 1;
     const maxWidth = Math.floor(rowHeight * (1 + maxRatio));
     const minWidth = Math.floor(rowHeight * (1 - maxRatio));
     console.log('minWidth', minWidth, 'maxWidth', maxWidth);
 
-    function finishRow(row: Image[]) {
-      if (!containerWidth) return [];
+    function finishRow (row: Image[]): Image[] {
+      if (containerWidth === undefined) return [];
       // console.log('resizing current row', row);
       const currentSum = row.reduce((sum, { width: colWidth }) => sum + colWidth, 0);
       // console.log('currentSum', currentSum);
@@ -142,14 +141,14 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
 
       const remainingItemSpace = availableWidth - (resizedSum);
       // console.log('remainingItemSpace', remainingItemSpace)
-      const [ lastItem ] = resized.slice(-1);
+      const [lastItem] = resized.slice(-1);
 
       const result = [
         ...resized.slice(0, -1),
         {
           ...lastItem,
           width: lastItem.width + remainingItemSpace,
-        }
+        },
       ];
 
       // console.log('result', result);
@@ -180,13 +179,15 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
       const minColumnCountSatisfied = currentRowWidths.length >= minColumnCount;
       const maxColumnCountReached = currentRowWidths.length === maxColumnCount;
       const noRowSpace = rowWidthReached && minColumnCountSatisfied;
-      const isLastRow = currentRowCount === rowCount;
+      // const isLastRow = currentRowCount === rowCount;
       const itemsToProcess = convertedImages.length - (i + 1);
       const remainingRows = rowCount - currentRowCount;
-      const hasItemsToFillRows = itemsToProcess > remainingRows;
+      const enoughItemsForNextRows = itemsToProcess > remainingRows;
       const enoughRowsForNextItems = itemsToProcess / maxColumnCount < remainingRows;
       // console.log('enoughRowsForNextItems', enoughRowsForNextItems);
-      if (!hasItemsToFillRows || !isLastRow && (noRowSpace || maxColumnCountReached) && enoughRowsForNextItems) {
+      const widthOrColumnCountReached = noRowSpace || maxColumnCountReached;
+      const shouldBreakLine = enoughRowsForNextItems && widthOrColumnCountReached;
+      if (!enoughItemsForNextRows || shouldBreakLine) {
         finalData = [
           ...finalData,
           ...finishRow(currentRowWidths),
@@ -207,7 +208,7 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
     return finalData;
   }, [containerWidth, containerHeight, convertedImages, margin]);
 
-  if (!finalImages) {
+  if (finalImages === undefined) {
     return (
       <div
         className={`${containerClassName}`}

@@ -33,7 +33,7 @@ export default {
     }),
     sass({
       // Filename to write all styles
-      output: 'build/bundle.css',
+      output: 'dist/styles.css',
     }),
     resolve(),
     typescript({

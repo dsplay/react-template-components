@@ -10,11 +10,14 @@
   ],
   "scripts": {
     "lint": "eslint --ext .ts,.tsx,.js src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js src",
+    "prebuild": "npm run lint",
     "build": "rollup -c",
     "test": "jest --coverage",
     "storybook": "start-storybook",
     "format": "prettier --write src",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": {
