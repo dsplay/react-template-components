@@ -1,6 +1,6 @@
 {
   "name": "@dsplay/react-template-components",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React components for building DSPLAY templates",
   "main": "build/index.js",
   "module": "build/index.es.js",
