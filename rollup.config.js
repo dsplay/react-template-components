@@ -24,7 +24,10 @@ export default {
   ],
   plugins: [
     external(),
-    sass(),
+    sass({
+      // Filename to write all styles
+      output: 'build/bundle.css',
+    }),
     resolve(),
     typescript({
       rollupCommonJSResolveHack: true,
