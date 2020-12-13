@@ -243,5 +243,3 @@ export const GridGallery: React.FC<GridGalleryProps> = ({
     </div>
   );
 };
-
-export default GridGallery;
