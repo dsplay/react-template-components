@@ -2,15 +2,19 @@
   "name": "@dsplay/react-template-components",
   "version": "1.0.4",
   "description": "React components for building DSPLAY templates",
-  "main": "build/index.js",
-  "module": "build/index.es.js",
-  "jsnext:main": "build/index.es.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "lint": "eslint --ext .ts,.tsx,.js src",
     "build": "rollup -c",
     "test": "jest --coverage",
     "storybook": "start-storybook",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": {
@@ -58,6 +62,7 @@
     "react-dom": "^17.0.1",
     "rollup": "^2.33.3",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-sass": "^1.2.2",

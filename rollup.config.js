@@ -3,6 +3,8 @@ import commonjs from 'rollup-plugin-commonjs'
 import external from 'rollup-plugin-peer-deps-external'
 import resolve from 'rollup-plugin-node-resolve'
 import sass from 'rollup-plugin-sass';
+import copy from 'rollup-plugin-copy'
+
 
 import pkg from './package.json'
 
@@ -24,6 +26,11 @@ export default {
   ],
   plugins: [
     external(),
+    copy({
+      targets: [
+        { src: 'src/package.json', dest: 'dist/package.json' },
+      ]
+    }),
     sass({
       // Filename to write all styles
       output: 'build/bundle.css',
