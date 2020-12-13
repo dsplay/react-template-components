@@ -6,6 +6,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-a11y",
+    // '@storybook/preset-scss',
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -14,14 +15,16 @@ module.exports = {
 
     // Make whatever fine-grained changes you need
     config.module.rules.push({
-      test: /\.scss$/,
+      test: /\.s(a|c)ss$/,
       use: [
         { loader: "style-loader" },
         {
           loader: "css-loader",
-          options: { modules: true },
+          // options: { modules: true },
         },
-        { loader: "sass-loader" },
+        {
+          loader: "sass-loader",
+        },
       ],
       include: path.resolve(__dirname, "../"),
     });

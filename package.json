@@ -1,7 +1,7 @@
 {
-  "name": "my-components",
+  "name": "@dsplay/react-template-components",
   "version": "1.0.0",
-  "description": "My Component Library template",
+  "description": "React components for building DSPLAY templates",
   "main": "build/index.js",
   "module": "build/index.es.js",
   "jsnext:main": "build/index.es.js",
@@ -25,14 +25,14 @@
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
-    "@storybook/addon-a11y": "^6.1.8",
-    "@storybook/addon-actions": "^6.1.8",
-    "@storybook/addon-docs": "^6.1.8",
-    "@storybook/addon-essentials": "^6.1.8",
-    "@storybook/addon-links": "^6.1.8",
-    "@storybook/addon-storyshots": "^6.1.8",
-    "@storybook/addon-viewport": "^6.1.8",
-    "@storybook/react": "^6.1.8",
+    "@storybook/addon-a11y": "^6.1.11",
+    "@storybook/addon-actions": "^6.1.11",
+    "@storybook/addon-docs": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/addon-storyshots": "^6.1.11",
+    "@storybook/addon-viewport": "^6.1.11",
+    "@storybook/react": "^6.1.11",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.15",
@@ -40,6 +40,7 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
     "eslint": "^7.14.0",
     "eslint-config-standard-with-typescript": "^19.0.1",
     "eslint-plugin-import": "^2.22.1",
@@ -59,7 +60,10 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-typescript2": "^0.29.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.11",
     "typescript": "^4.1.2"
@@ -67,5 +71,6 @@
   "peerDependencies": {
     "react": "^17",
     "react-dom": "^17"
-  }
+  },
+  "dependencies": {}
 }

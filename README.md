@@ -1,6 +1,6 @@
-# my-components
+# DSPLAY React template components
 
-This is a template repo. just clone it, export it and rename to set your own component library module name.
+React components for building DSPLAY templates
 
 ## Usage
 
